@@ -54,7 +54,10 @@
             window.getSelection().removeAllRanges();
 
             // Optionally, provide user feedback (you can customize this part)
-            alert("URL copied to clipboard!");
+            alert("URL copied to clipboard! This Window is going to close!");
+
+            // Close the tab
+            window.close();
         }
     </script>
 </body>
