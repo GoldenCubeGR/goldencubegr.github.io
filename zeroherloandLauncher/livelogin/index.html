@@ -21,15 +21,12 @@
         }
     </style>
     <script>
-    // Wrap the code in an event listener for the DOMContentLoaded event
-    document.addEventListener("DOMContentLoaded", function() {
         // Use JavaScript to get the current URL
         var currentURL = window.location.href;
-
+    
         // Access the HTML element and set its content to the current URL
-        document.getElementById("currentURL").innerHTML = "Current URL: " + currentURL;
-    });
-</script>
+        document.getElementById("currentURL").innerHTML = currentURL;
+    </script>
     <title>goldenCube</title>
 </head>
 <body id="Body">
@@ -38,7 +35,7 @@
             <font color="red">
                 <H1>Welcome to ZHL Launcher Login</H1>
                 <H2>Please paste this url to ur launcher cmd! </H2>
-                <H2>Current URl:</H2><h2 id="currentURL"></h2>
+                <h2 id="currentURL"></h2>
             </font>
         </center>
     </div>
