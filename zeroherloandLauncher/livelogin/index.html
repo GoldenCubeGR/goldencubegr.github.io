@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #ConMSG{
+            position:absolute;
+            border-style: double;
+            border-color: beige;
+            border-width: 5px;
+            top: 20%;
+            left:25%;
+            height: 150px;
+            width: 670px;
+
+        }
+        #Body{
+            background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
+        }
+    </style>
+    <script>
+        // Use JavaScript to get the current URL
+        var currentURL = window.location.href;
+    
+        // Access the HTML element and set its content to the current URL
+        document.getElementById("currentURL").innerHTML = "Current URL: " + currentURL;
+    </script>
+    <title>goldenCube</title>
+</head>
+<body id="Body">
+    <div id="ConMSG">
+        <center>
+            <font color="red">
+                <H1>Welcome to ZHL Launcher Login</H1>
+                <H2>Please paste this url to ur launcher cmd! </H2>
+                <H2>Current URl:</H2><h2 id="currentURL"></h2>
+            </font>
+        </center>
+    </div>
+</body>
+</html>
