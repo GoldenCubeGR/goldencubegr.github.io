@@ -5,42 +5,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        #ConMSG{
+        #ConMSG {
             position:absolute;
             border-style: double;
             border-color: beige;
             border-width: 5px;
             top: 20%;
-            left:25%;
+            left: 25%;
             height: 250px;
             width: 670px;
-
         }
-        #Body{
+        #Body {
             background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
         }
     </style>
-    <script>
-    // Wrap the code in an event listener for the DOMContentLoaded event
-    document.addEventListener("DOMContentLoaded", function() {
-        // Use JavaScript to get the current URL
-        var currentURL = window.location.href;
-
-        // Access the HTML element and set its content to the current URL
-        document.getElementById("currentURL").innerHTML = "Current URL: " + currentURL;
-    });
-</script>
     <title>goldenCube</title>
 </head>
 <body id="Body">
     <div id="ConMSG">
         <center>
             <font color="red">
-                <H1>Welcome to ZHL Launcher Login</H1>
-                <H2>Please paste this url to ur launcher cmd! </H2>
+                <h1>Welcome to ZHL Launcher Login</h1>
+                <h2>Please paste this URL to your launcher cmd!</h2>
                 <h2 id="currentURL"></h2>
+                <button onclick="copyToClipboard()">Copy URL</button>
             </font>
         </center>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentURL = window.location.href;
+            document.getElementById("currentURL").innerHTML = "Current URL: " + currentURL;
+        });
+
+        function copyToClipboard() {
+            // Select the URL text
+            var urlElement = document.getElementById("currentURL");
+            var range = document.createRange();
+            range.selectNode(urlElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
+            // Copy the selected text
+            document.execCommand("copy");
+
+            // Remove the selection
+            window.getSelection().removeAllRanges();
+
+            // Optionally, provide user feedback (you can customize this part)
+            alert("URL copied to clipboard!");
+        }
+    </script>
 </body>
 </html>
