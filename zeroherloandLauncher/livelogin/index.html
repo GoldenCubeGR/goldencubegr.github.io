@@ -21,12 +21,15 @@
         }
     </style>
     <script>
+    // Wrap the code in an event listener for the DOMContentLoaded event
+    document.addEventListener("DOMContentLoaded", function() {
         // Use JavaScript to get the current URL
         var currentURL = window.location.href;
-    
+
         // Access the HTML element and set its content to the current URL
-        document.getElementById("currentURL").innerHTML = currentURL;
-    </script>
+        document.getElementById("currentURL").innerHTML = "Current URL: " + currentURL;
+    });
+</script>
     <title>goldenCube</title>
 </head>
 <body id="Body">
