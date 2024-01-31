@@ -5,7 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        /* Add a wrapper around the content and footer */
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Set minimum height to fill the viewport */
+        }
+
         #ConMSG {
+            /* Styles for your existing content */
             position: absolute;
             border-style: double;
             border-color: beige;
@@ -17,27 +25,13 @@
             background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
         }
 
-        #Body {
-            background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
-        }
-
-        /* Additional styles for mobile devices */
-        @media only screen and (max-width: 480px) {
-            #ConMSG {
-                top: 5%;
-                left: 2%;
-                width: 96%;
-                height: auto;
-                padding: 10px;
-            }
-        }
-
-        /* Footer styles */
         footer {
+            /* Footer styles */
             background-color: #333;
             color: #fff;
             padding: 20px 0;
             text-align: center;
+            margin-top: auto; /* Push footer to the bottom */
         }
 
         footer a {
@@ -52,14 +46,16 @@
     </style>
     <title>goldenCube</title>
 </head>
-<body id="Body">
-<div id="ConMSG">
-    <center>
-        <font color="red">
-            <H1>Hello Everyone!</H1>
-            <H2>This site is currently under huge construction and development</H2>
-        </font>
-    </center>
+<body>
+<div class="wrapper">
+    <div id="ConMSG">
+        <center>
+            <font color="red">
+                <H1>Hello Everyone!</H1>
+                <H2>This site is currently under huge construction and development</H2>
+            </font>
+        </center>
+    </div>
 </div>
 
 <footer>
@@ -71,18 +67,6 @@
     <a href="mailto:info@goldencube.com">Email</a> 
     <br> Volos, Greece
 </footer>
-
-<script>
-    // JavaScript to detect mobile devices and apply styles
-    if (/Mobi|Android/i.test(navigator.userAgent)) {
-        // Code to execute if the user is accessing the site from a mobile device
-        document.getElementById('ConMSG').style.top = '5%';
-        document.getElementById('ConMSG').style.left = '2%';
-        document.getElementById('ConMSG').style.width = '96%';
-        document.getElementById('ConMSG').style.height = 'auto';
-        document.getElementById('ConMSG').style.padding = '10px';
-    }
-</script>
 
 </body>
 </html>
