@@ -4,25 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>goldenCube</title>
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7; /* Light gray background */
+        }
+
         /* Add a wrapper around the content and footer */
         .wrapper {
             display: flex;
             flex-direction: column;
             min-height: 100vh; /* Set minimum height to fill the viewport */
+            background-color: #fff; /* White background */
+            border: 1px solid #e0e0e0; /* Light gray border */
+            border-radius: 5px;
+            margin: 20px; /* Add some margin for aesthetics */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
         }
 
         #ConMSG {
             /* Styles for your existing content */
-            position: absolute;
-            border-style: double;
-            border-color: beige;
-            border-width: 5px;
-            top: 20%;
-            left: 25%;
-            height: 150px;
-            width: 670px;
+            border: 2px solid #ffd700; /* Golden border */
+            padding: 20px;
+            text-align: center;
+            margin: 20px auto; /* Center content */
             background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
+            background-size: cover; /* Make sure background image covers entire div */
+            color: #fff; /* White text color */
         }
 
         footer {
@@ -43,33 +53,54 @@
         footer a:hover {
             text-decoration: underline;
         }
-        #Body{
-            background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
+
+        #TopNav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        #AboutPage {
+            padding: 20px;
+            background-color: #f9f9f9; /* Light gray background */
+            border-radius: 5px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
         }
     </style>
-    <title>goldenCube</title>
 </head>
-<body id="Body">
+<body>
+
+<div id="TopNav">
+    <a href="#">Home</a> |
+    <a href="#">Choose Page</a> |
+    <a href="#AboutPage">About</a>
+</div>
+
 <div class="wrapper">
     <div id="ConMSG">
-        <center>
-            <font color="red">
-                <H1>Hello Everyone!</H1>
-                <H2>This site is currently under huge construction and development</H2>
-            </font>
-        </center>
+        <h1>Hello Everyone!</h1>
+        <h2>This site is currently under huge construction and development</h2>
     </div>
 </div>
 
 <footer>
-    &copy; GoldenCube 2024 | 
+    &copy; GoldenCube 2024 |
     <a href="https://www.youtube.com">YouTube</a> |
     <a href="https://www.instagram.com/goldencube">Instagram</a> |
     <a href="https://twitter.com/goldencube">Twitter</a> |
     <a href="https://www.tiktok.com/@goldencube_official">TikTok</a> |
-    <a href="mailto:info@goldencube.dev">Email</a> 
+    <a href="mailto:info@goldencube.dev">Email</a>
     <br> Volos, Greece
 </footer>
+
+<div id="AboutPage">
+    <h2>About goldenCube</h2>
+    <p>goldenCube is a Greek coding company specializing in the development of websites, applications, and video games.
+    While currently a small company, we have ambitious dreams of becoming a larger and more impactful player in the industry.
+    Founded by Odysseas Chryssos, goldenCube is dedicated to delivering exceptional digital solutions that exceed client expectations.</p>
+</div>
 
 </body>
 </html>
