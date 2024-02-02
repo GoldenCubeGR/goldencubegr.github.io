@@ -14,21 +14,27 @@
             background-repeat: no-repeat;
         }
 
-        .wrapper, #ConMSG, #AboutPage {
-            background-color: rgba(255, 255, 255, 0.7); /* Transparent white background */
-            border: 2px solid #333; /* Dark gray border */
-            border-radius: 5px;
-            margin: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Set minimum height to fill the viewport */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+        }
+
+        #ConMSG {
+            border: 5px double beige;
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+            padding: 20px;
+            text-align: center;
         }
 
         footer {
-            /* Footer styles */
             background-color: #333;
             color: #fff;
             padding: 20px 0;
             text-align: center;
-            margin-top: auto; /* Push footer to the bottom */
+            width: 100%; /* Full width */
         }
 
         footer a {
@@ -40,44 +46,26 @@
         footer a:hover {
             text-decoration: underline;
         }
-
-        #TopNav {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
 
-<div id="TopNav">
-    <a href="#">Home</a> |
-    <a href="#">Choose Page</a> |
-    <a href="#AboutPage">About</a>
-</div>
-
 <div class="wrapper">
     <div id="ConMSG">
-        <h1>Hello Everyone!</h1>
-        <h2>This site is currently under huge construction and development</h2>
-    </div>
-
-    <div id="AboutPage">
-        <h2>About goldenCube</h2>
-        <p>goldenCube is a Greek coding company specializing in the development of websites, applications, and video games.
-        While currently a small company, we have ambitious dreams of becoming a larger and more impactful player in the industry.
-        Founded by Odysseas Chryssos, goldenCube is dedicated to delivering exceptional digital solutions that exceed client expectations.</p>
+        <font color="red">
+            <h1>Hello Everyone!</h1>
+            <h2>This site is currently under huge construction and development</h2>
+        </font>
     </div>
 </div>
 
 <footer>
-    &copy; GoldenCube 2024 |
+    &copy; GoldenCube 2024 | 
     <a href="https://www.youtube.com">YouTube</a> |
     <a href="https://www.instagram.com/goldencube">Instagram</a> |
     <a href="https://twitter.com/goldencube">Twitter</a> |
     <a href="https://www.tiktok.com/@goldencube_official">TikTok</a> |
-    <a href="mailto:info@goldencube.dev">Email</a>
+    <a href="mailto:info@goldencube.dev">Email</a> 
     <br> Volos, Greece
 </footer>
 
