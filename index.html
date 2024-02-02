@@ -10,6 +10,10 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f7f7f7; /* Light gray background */
+            background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
+            background-size: cover; /* Make sure background image covers entire body */
+            background-repeat: no-repeat; /* Prevent background image from repeating */
+            background-attachment: fixed; /* Keep background image fixed while scrolling */
         }
 
         /* Add a wrapper around the content and footer */
@@ -18,7 +22,7 @@
             flex-direction: column;
             min-height: 100vh; /* Set minimum height to fill the viewport */
             background-color: #fff; /* White background */
-            border: 1px solid #e0e0e0; /* Light gray border */
+            border: 2px solid #333; /* Dark gray border */
             border-radius: 5px;
             margin: 20px; /* Add some margin for aesthetics */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
@@ -26,12 +30,10 @@
 
         #ConMSG {
             /* Styles for your existing content */
-            border: 2px solid #ffd700; /* Golden border */
+            border: 2px solid #333; /* Dark gray border */
             padding: 20px;
             text-align: center;
             margin: 20px auto; /* Center content */
-            background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
-            background-size: cover; /* Make sure background image covers entire div */
             color: #fff; /* White text color */
         }
 
@@ -70,7 +72,7 @@
         }
     </style>
 </head>
-<body>
+<body id="Body">
 
 <div id="TopNav">
     <a href="#">Home</a> |
@@ -83,24 +85,24 @@
         <h1>Hello Everyone!</h1>
         <h2>This site is currently under huge construction and development</h2>
     </div>
+
+    <div id="AboutPage">
+        <h2>About goldenCube</h2>
+        <p>goldenCube is a Greek coding company specializing in the development of websites, applications, and video games.
+        While currently a small company, we have ambitious dreams of becoming a larger and more impactful player in the industry.
+        Founded by Odysseas Chryssos, goldenCube is dedicated to delivering exceptional digital solutions that exceed client expectations.</p>
+    </div>
 </div>
 
 <footer>
     &copy; GoldenCube 2024 |
-    <a href="https://www.youtube.com/goldenCube">YouTube</a> |
+    <a href="https://www.youtube.com">YouTube</a> |
     <a href="https://www.instagram.com/goldencube">Instagram</a> |
     <a href="https://twitter.com/goldencube">Twitter</a> |
     <a href="https://www.tiktok.com/@goldencube_official">TikTok</a> |
     <a href="mailto:info@goldencube.dev">Email</a>
     <br> Volos, Greece
 </footer>
-
-<div id="AboutPage">
-    <h2>About goldenCube</h2>
-    <p>goldenCube is a Greek coding company specializing in the development of websites, applications, and video games.
-    While currently a small company, we have ambitious dreams of becoming a larger and more impactful player in the industry.
-    Founded by Odysseas Chryssos, goldenCube is dedicated to delivering exceptional digital solutions that exceed client expectations..</p>
-</div>
 
 </body>
 </html>
