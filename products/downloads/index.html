@@ -94,10 +94,17 @@ window.onload = function() {
 </script>
 </head>
 <body>
-    <div class="ConMSG">
-        <h1>Download Page</h1>
-        <div id="errorMessage"></div>
-        <a id="downloadLink" href="#" download>Download File</a>
+    <div id="TopNav">
+    <a href="#">Home</a>
+    <a href="#" onclick="toggleProducts()">Products</a> <!-- Added onclick event -->
+    <a href="#AboutPage">About</a>
+    </div>
+    <div class="wrapper">
+       <div id="ConMSG">
+           <h1>Download Page</h1>
+           <div id="errorMessage"></div>
+           <a id="downloadLink" href="#" download>Download File</a>
+       </div>
     </div>
 </body>
 </html>
