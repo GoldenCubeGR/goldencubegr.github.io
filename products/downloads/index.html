@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>goldenCube</title>
@@ -104,12 +105,15 @@ window.onload = function() {
     if (virousprank) {
         var downloadLink = 'https://files.e-me.edu.gr/s/T6CrxHa2yM58KjD/download';
         document.getElementById('downloadLink').setAttribute('href', downloadLink);
+        document.getElementById('ConMSG').getElementsByTagName('h1')[0].innerText = 'Download Virous Prank';
     } else if (TGWU) {
         var downloadLink = 'https://goldencube.dev/files/TGWUInstaller.exe';
         document.getElementById('downloadLink').setAttribute('href', downloadLink);
+        document.getElementById('ConMSG').getElementsByTagName('h1')[0].innerText = 'Download The Game With U';
     } else {
         // Handle other cases or errors
         document.getElementById('errorMessage').innerText = 'Invalid download request.';
+        document.getElementById('downloadLink').style.display = 'none'; // Hide download link
     }
 };
 </script>
