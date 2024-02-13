@@ -29,24 +29,51 @@
             color: #777; /* Lighter gray text color */
         }
 
-        #AboutPage {
+        #AboutPageContent {
             border: 5px double beige;
             padding: 20px;
             text-align: center;
             margin-top: 50px; /* Increase margin to move #AboutPage further down */
         }
 
-        #AboutPage h2 {
+        #AboutPageContent h2 {
             color: #fff; /* White text color */
         }
 
-        #AboutPage h3 {
+        #AboutPageContent h3 {
             color: #fff; /* White text color */
+        }
+
+        .products-list {
+            display: none; /* Hide products list initially */
+            color: #fff; /* White text color */
+            border: 5px double beige;
+            padding: 40px;
+            text-align: center;
+            top: 100px; /* Adjusted margin to move Products Page Div towards the top */
+            font-size: 24px; /* Increase font size of product list */
+            position: absolute; /* Position the products list absolutely */
+            left: 20px; /* Position the products list with some padding from the left */
+        }
+
+        .products-list ul {
+            list-style-type: none; /* Remove bullet points from the list */
+            padding: 0;
+        }
+
+        .products-list ul li a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .products-list ul li a:hover {
+            text-decoration: underline;
         }
 
         footer {
             background-color: #333;
-            color: #777; /* Lighter gray text color */
+            color: #fff; /* White text color */
             padding: 20px 0;
             text-align: center;
             width: 100%; /* Full width */
@@ -84,7 +111,6 @@
         #TopNav a:hover {
             background-color: #555;
         }
-
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -92,7 +118,7 @@
 
 <div id="TopNav">
     <a href="#">Home</a>
-    <a href="#">Choose Page</a>
+    <a href="#" onclick="toggleProducts()">Products</a> <!-- Added onclick event -->
     <a href="#AboutPage">About</a>
 </div>
 
@@ -105,22 +131,65 @@
     </div>
 
     <div id="AboutPage">
-        <h2>About goldenCube</h2>
-        <h3>goldenCube is a Greek coding company specializing in the development of websites, applications, and video games.
-        While currently a small company, we have ambitious dreams of becoming a larger and more impactful player in the industry.
-        Founded by Odysseas Chryssos, goldenCube is dedicated to delivering exceptional digital solutions that exceed client expectations.</h3>
+        <div id="AboutPageContent">
+            <h2>About goldenCube</h2>
+            <h3>goldenCube is a Greek coding company specializing in the development of websites, applications, and video games.
+                While currently a small company, we have ambitious dreams of becoming a larger and more impactful player in the industry.
+                Founded by Odysseas Chryssos, goldenCube is dedicated to delivering exceptional digital solutions that exceed client expectations.</h3>
+        </div>
+    </div>
+
+    <div class="products-list">
+        <h2>Products</h2>
+        <ul>
+            <li><a href="#">Fake Virous Prank</a></li>
+            <li><a href="#">ZeroHeroLand Launcher</a></li>
+            <li><a href="#">TheGameWithYou</a></li>
+            <li><a href="#">Choose1</a></li>
+            <li><a href="#">Not Exist</a></li>
+            <li><a href="#">Not Exist</a></li>
+            <li><a href="#">Not Exist</a></li>
+            <li><a href="#">Not Exist</a></li>
+            <li><a href="#">Not Exist</a></li>
+            <li><a href="#">Not Exist</a></li>
+            <li><a href="#">Not Exist</a></li>
+            <!-- Add more products as needed -->
+        </ul>
     </div>
 </div>
 
 <footer>
-    &copy; GoldenCube 2024 | 
+    &copy; GoldenCube 2024 |
     <a href="https://www.youtube.com">YouTube</a> |
     <a href="https://www.instagram.com/goldencube">Instagram</a> |
     <a href="https://twitter.com/goldencube">Twitter</a> |
     <a href="https://www.tiktok.com/@goldencube_official">TikTok</a> |
-    <a href="mailto:info@goldencube.dev">Email</a> 
+    <a href="mailto:info@goldencube.dev">Email</a>
     <br> Volos, Greece
 </footer>
+
+<script>
+    window.onload = function() {
+        var aboutPage = document.getElementById('AboutPage');
+        aboutPage.style.display = 'block'; // Show About page by default
+    };
+
+    function toggleProducts() {
+        var aboutPage = document.getElementById('AboutPage');
+        var productsList = document.querySelector('.products-list');
+        var underConstruction = document.getElementById('ConMSG');
+
+        if (aboutPage.style.display === 'none') {
+            aboutPage.style.display = 'block'; // Show About page
+            productsList.style.display = 'none'; // Hide products list
+            underConstruction.style.display = 'block'; // Show Under Construction message
+        } else {
+            aboutPage.style.display = 'none'; // Hide About page
+            productsList.style.display = 'block'; // Show products list
+            underConstruction.style.display = 'none'; // Hide Under Construction message
+        }
+    }
+</script>
 
 </body>
 </html>
