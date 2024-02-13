@@ -20,6 +20,7 @@
             min-height: 100vh; /* Set minimum height to fill the viewport */
             align-items: center; /* Center horizontally */
             justify-content: center; /* Center vertically */
+            transition: opacity 0.5s ease-in-out; /* Smooth transition */
         }
 
         #ConMSG {
@@ -54,6 +55,13 @@
             font-size: 24px; /* Increase font size of product list */
             position: absolute; /* Position the products list absolutely */
             left: 20px; /* Position the products list with some padding from the left */
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.5s ease-in-out; /* Smooth transition */
+        }
+
+        .products-list.visible {
+            display: block;
+            opacity: 1; /* Show with fade-in effect */
         }
 
         .products-list ul {
@@ -122,7 +130,7 @@
     <a href="#AboutPage">About</a>
 </div>
 
-<div class="wrapper">
+<div class="wrapper" id="mainContent">
     <div id="ConMSG">
         <font color="red">
             <h1>Hello Everyone!</h1>
@@ -139,7 +147,7 @@
         </div>
     </div>
 
-    <div class="products-list">
+    <div class="products-list" id="productList">
         <h2>Products</h2>
         <ul>
             <li><a href="#">Fake Virous Prank</a></li>
@@ -176,17 +184,17 @@
 
     function toggleProducts() {
         var aboutPage = document.getElementById('AboutPage');
-        var productsList = document.querySelector('.products-list');
-        var underConstruction = document.getElementById('ConMSG');
+        var productList = document.getElementById('productList');
+        var mainContent = document.getElementById('mainContent');
 
         if (aboutPage.style.display === 'none') {
             aboutPage.style.display = 'block'; // Show About page
-            productsList.style.display = 'none'; // Hide products list
-            underConstruction.style.display = 'block'; // Show Under Construction message
+            productList.classList.remove('visible'); // Hide products list
+            mainContent.classList.add('visible'); // Show main content
         } else {
             aboutPage.style.display = 'none'; // Hide About page
-            productsList.style.display = 'block'; // Show products list
-            underConstruction.style.display = 'none'; // Hide Under Construction message
+            productList.classList.add('visible'); // Show products list
+            mainContent.classList.remove('visible'); // Hide main content
         }
     }
 </script>
