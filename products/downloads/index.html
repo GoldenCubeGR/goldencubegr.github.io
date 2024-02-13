@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download Page</title>
+<script>
+window.onload = function() {
+    // Get the parameter value from the URL
+    var params = new URLSearchParams(window.location.search);
+    var downloadName = params.get('downloadName');
+    var virousprank = params.get('virousprank');
+    var TGWU = params.get('TGWU');
+    
+    // Set the download link based on the parameter value
+    if (virousprank === 'true') {
+        var downloadLink = 'https://files.e-me.edu.gr/s/T6CrxHa2yM58KjD/download';
+        document.getElementById('downloadLink').setAttribute('href', downloadLink);
+    } else if (TGWU === 'true') {
+        var downloadLink = 'https://goldencube.dev/files/TGWUInstaller.exe';
+        document.getElementById('downloadLink').setAttribute('href', downloadLink);
+    } else {
+        // Handle other cases or errors
+        document.getElementById('errorMessage').innerText = 'Invalid download request.';
+    }
+};
+</script>
+</head>
+<body>
+    <h1>Download Page</h1>
+    <div id="errorMessage"></div>
+    <a id="downloadLink" href="#" download>Download File</a>
+</body>
+</html>
