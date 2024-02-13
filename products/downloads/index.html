@@ -93,14 +93,14 @@ window.onload = function() {
     // Get the parameter value from the URL
     var params = new URLSearchParams(window.location.search);
     var downloadName = params.get('downloadName');
-    var virousprank = params.has('virousprank');
-    var TGWU = params.has('TGWU');
+    var virousprank = params.get('virousprank');
+    var TGWU = params.get('TGWU');
     
     // Set the download link based on the parameter value
-    if (virousprank) {
+    if (virousprank === 'true') {
         var downloadLink = 'https://files.e-me.edu.gr/s/T6CrxHa2yM58KjD/download';
         document.getElementById('downloadLink').setAttribute('href', downloadLink);
-    } else if (TGWU) {
+    } else if (TGWU === 'true') {
         var downloadLink = 'https://goldencube.dev/files/TGWUInstaller.exe';
         document.getElementById('downloadLink').setAttribute('href', downloadLink);
     } else {
