@@ -14,7 +14,7 @@
             background-repeat: no-repeat;
         }
 
-        #ConMSG h1 {
+        #ConMSG h2 {
             color: #fff; /* White text color */
         }
 
@@ -22,6 +22,25 @@
             color: #fff; /* White text color */
         }
 
+        #ProductDescription h1 {
+            color: #fff; /* White text color */
+        }
+
+        #ProductDescription h3 {
+            color: #fff; /* White text color */
+        }
+
+        #ProductDescription div {
+            color: #fff; /* White text color */
+        }
+
+         #ProductDescription {
+            border: 5px double beige;
+            padding: 20px;
+            text-align: center;
+            color: #777; /* Lighter gray text color */
+        }
+        
         .wrapper {
             display: flex;
             flex-direction: column;
@@ -105,11 +124,13 @@ window.onload = function() {
     if (virousprank) {
         var downloadLink = 'https://files.e-me.edu.gr/s/T6CrxHa2yM58KjD/download';
         document.getElementById('downloadLink').setAttribute('href', downloadLink);
-        document.getElementById('ConMSG').getElementsByTagName('h1')[0].innerText = 'Download Virous Prank';
+        document.getElementById('ConMSG').getElementsByTagName('h2')[0].innerText = 'Download Virous Prank';
+        document.getElementById('ProductDescription').getElementsByTagName('h1')[0].innerText = 'Virus Prank: An Entertaining Trick for Friends';
+        document.getElementById('ProductDescriptiom').getElementsByTagName('h3')[0].innerText = 'Looking for a fun prank to pull on your friends? Why not make them think their computer has a virus! For an extra twist, consider adding the file to the startup. Ready to give this prank a shot?';
     } else if (TGWU) {
         var downloadLink = 'https://goldencube.dev/files/TGWUInstaller.exe';
         document.getElementById('downloadLink').setAttribute('href', downloadLink);
-        document.getElementById('ConMSG').getElementsByTagName('h1')[0].innerText = 'Download The Game With U';
+        document.getElementById('ConMSG').getElementsByTagName('h2')[0].innerText = 'Download The Game With U';
     } else {
         // Handle other cases or errors
         document.getElementById('errorMessage').innerText = 'Invalid download request.';
@@ -125,6 +146,10 @@ window.onload = function() {
     <a href="https://goldencube.dev/#AboutPage">About</a>
     </div>
     <div class="wrapper">
+       <div id="ProductDescription">
+           <h1></h1>
+           <h3></h3>
+       </div>
        <div id="ConMSG">
            <h1>Download Page</h1>
            <div id="errorMessage"></div>
