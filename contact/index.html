@@ -3,18 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+    <title>Contact Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 150px;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        #status {
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Contact Us</h1>
-    <form action="send_email.php" method="POST">
-        <label for="name">Your Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="email">Your Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message" rows="4" required></textarea><br><br>
-        <input type="submit" value="Send">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <input type="text" id="subject" placeholder="Subject" required>
+        <textarea id="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
     </form>
+    <div id="status"></div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+
+            // Send email using Mailgun API
+            sendEmail(formData);
+        });
+
+        function sendEmail(formData) {
+            const apiKey = 'b436ba6b7bae0a6f72ab941c478ce41d-8c8e5529-771e1c1a';
+            const domain = 'http://sandbox78ea96cbc53f408cb7941f2b3e0c4fe4.mailgun.org/';
+            const mailgunUrl = `https://api.mailgun.net/v3/${domain}/messages`;
+
+            fetch(mailgunUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic ' + btoa('api:' + apiKey)
+                },
+                body: new URLSearchParams({
+                    from: formData.email,
+                    to: 'info@goldencube.dev', // Replace with your email address
+                    subject: formData.subject,
+                    text: `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('status').innerText = 'Message sent successfully!';
+                    document.getElementById('contactForm').reset();
+                } else {
+                    throw new Error('Error sending message');
+                }
+            })
+            .catch(error => {
+                document.getElementById('status').innerText = 'Error: ' + error.message;
+            });
+        }
+    </script>
 </body>
 </html>
