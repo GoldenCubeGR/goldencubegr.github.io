@@ -68,25 +68,36 @@
     <font color="#fff">
     <h2>Contact Us!</h2>
     </font>
-    <form
-  action="https://formspree.io/f/xleqbllp"
-  method="POST"
->
-  <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Send</button>
-</form>
+    <form id="contactForm" action="https://formspree.io/f/xleqbllp" method="POST" onsubmit="return validateForm()">
+        <label>
+            Your email:
+            <input type="email" name="email" id="email">
+        </label>
+        <label>
+            Your message:
+            <textarea name="message" id="message"></textarea>
+        </label>
+        <!-- your other form fields go here -->
+        <button type="submit">Send</button>
+    </form>
     <div id="status"></div>
 </div>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2647736633967701" crossorigin="anonymous"></script>
+
+<script>
+    function validateForm() {
+        var email = document.getElementById('email').value;
+        var message = document.getElementById('message').value;
+
+        if (email.trim() === '' || message.trim() === '') {
+            alert('Please fill in all fields.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
 
 </body>
 </html>
