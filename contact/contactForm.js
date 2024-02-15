@@ -14,10 +14,10 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 
 function sendEmail(formData) {
     Email.send({
-        Host: "smtp.gmail.com",
-        Username: "goldencubemailing@gmail.com", // Your Gmail address
-        Password: "GoOdMoRnIngUsA2010-2024@goldencube", // Your Gmail password
-        To: "info@goldencube.dev", // Recipient's email address
+        Host: "smtp-relay.gmail.com",
+        Username: "your_service_account_email@gmail.com", // Your service account email address
+        Password: "your_service_account_password", // Your service account password
+        To: "recipient@example.com", // Recipient's email address
         From: formData.email, // Sender's email address (from contact form)
         Subject: formData.subject,
         Body: `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`
