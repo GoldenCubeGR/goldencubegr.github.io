@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Form File</title>
+    <title>Contact Form</title>
     <style>
         body {
             margin: 0;
@@ -102,7 +102,7 @@
             background-color: #555;
         }
 
-        #switchMessage a {
+        #fileUpload a {
             color: #fff;
             text-decoration: none;
             margin: 0 20px;
@@ -111,28 +111,52 @@
             transition: background-color 0.3s ease;
         }
 
-        #switchMessage a:hover {
+        #fileUpload a:hover {
             background-color: #555;
         }
+
+        /* Popup styles */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+       
+       #infoButton {
+          cursor: pointer;
+     /* This changes the cursor to a hand pointer */
+}
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="TopNav">
-    <a href="https://goldencube.dev">Home</a>
-    <a href="https://goldencube.dev/#"AboutPage>About</a> <!-- Added onclick event -->
-    <a href="/#">Contact</a>
+        <a href="https://goldencube.dev">Home</a>
+        <a href="https://goldencube.dev/#"AboutPage>About</a> <!-- Added onclick event -->
+        <a href="/#">Contact</a>
     </div>
-<div class="wrapper">
-    <font color="#fff">
-    <h2>Contact Us!</h2>
-    </font>
-    <form id="contactForm"
-  action="https://formspree.io/f/xleqbllp"
-  method="POST"
-  enctype="multipart/form-data"
-  nsubmit="return validateForm()"
->
+    <div class="wrapper">
+        <font color="#fff">
+            <h2>Contact Us!</h2>
+            </font>
+        <div id="infoButton" onclick="togglePopup()"><h3>i</h3></div> <!-- Info button -->
+        </font>
+        <form id="contactForm" action="https://formspree.io/f/xleqbllp" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
   <label>
     Your email:
     <input type="email" name="email">
@@ -141,40 +165,50 @@
     Your file:
     <input type="file" name="upload">
   </label>
-  <br>
   <button type="submit">Send</button>
 </form>
-    <div id="status"></div>
-    <div id="switchMessage">
-        <a href="https://goldencube.dev/contact">Switch to Message</a>
+        <div id="status"></div>
+        <div id="fileUpload">
+            <a href="/contact/fileupload">Switch to File Upload</a>
+        </div>
+        <font color="#fff">
+        <div id="infoButton" onclick="togglePopup()"><h3>info</h3></div> <!-- Info button -->
+        </font>
     </div>
-</div>
-
     <footer>
-    &copy; GoldenCube 2024 |
-    <a href="https://www.youtube.com">YouTube</a> |
-    <a href="https://www.instagram.com/goldencube">Instagram</a> |
-    <a href="https://twitter.com/goldencube">Twitter</a> |
-    <a href="https://www.tiktok.com/@goldencube_official">TikTok</a> |
-    <a href="mailto:info@goldencube.dev">Email</a>
-    <br> Volos, Greece
-</footer>
-    
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2647736633967701" crossorigin="anonymous"></script>
+        &copy; GoldenCube 2024 |
+        <a href="https://www.youtube.com">YouTube</a> |
+        <a href="https://www.instagram.com/goldencube">Instagram</a> |
+        <a href="https://twitter.com/goldencube">Twitter</a> |
+        <a href="https://www.tiktok.com/@goldencube_official">TikTok</a> |
+        <a href="mailto:info@goldencube.dev">Email</a>
+        <br> Volos, Greece
+    </footer>
 
-<script>
-    function validateForm() {
-        var email = document.getElementById('email').value;
-        var message = document.getElementById('message').value;
+    <div id="infoPopup" class="popup">
+        <span class="close" onclick="togglePopup()">×</span>
+        <p>This message is going to get sent to: <strong>info@goldencube.dev</strong> and to a semi-private Discord server.</p>
+    </div>
 
-        if (email.trim() === '' || message.trim() === '') {
-            alert('Please fill in all fields.');
-            return false;
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2647736633967701" crossorigin="anonymous"></script>
+
+    <script>
+        function validateForm() {
+            var email = document.getElementById('email').value;
+            var message = document.getElementById('message').value;
+
+            if (email.trim() === '' || message.trim() === '') {
+                alert('Please fill in all fields.');
+                return false;
+            }
+
+            return true;
         }
 
-        return true;
-    }
-</script>
-
+        function togglePopup() {
+            var popup = document.getElementById('infoPopup');
+            popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+        }
+    </script>
 </body>
 </html>
