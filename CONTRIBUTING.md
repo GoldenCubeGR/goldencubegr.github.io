@@ -1,0 +1,3 @@
+- Contributing
+
+  Cant Contribute sry :'(
