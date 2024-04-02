@@ -25,9 +25,16 @@
             fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    // If your API requires an API key, include it in the headers like this:
-                    //'Authorization': 'Bearer ' + apiKey
+                    ':authority': 'api.minefort.com',
+                    ':method': 'POST',
+                    ':path': '/v1/server/' + serverId + '/start',
+                    ':scheme': 'https',
+                    'Accept': 'application/json, text/plain, */*',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    'Accept-Language': 'en-US,en;q=0.9',
+                    'Content-Length': '0',
+                    'Cookie': '_gcl_au=1.1.1764301118.1712070619; _ga=GA1.1.357139944.1712070621; _clck=yawz0e%7C2%7Cfkl%7C0%7C1553; __stripe_mid=be65b826-c1a7-4e9d-992b-c9fd2df94f2d529796; __stripe_sid=92c84479-600e-4f6c-a450-28e5947a6b87b34cae; minefort-session=s%3AxCNoQ5u0VJAMuAZEbjE-ADr6LlGI3heJ.hpnCd7p52W%2FskjPAdgBikesuTPFNPmeJg6Iv1cI%2Fccs; cf_clearance=JIsrl.KHMGDcdin.cY5lPoT1bC_IWH7rDbSXuE6R5I0-1712071644-1.0.1.1-ujHOxBP0lFeKpfX6UZf6dC3Y.s5Ha9Q3QG8Kn3TZj2cdSwoXupH1w7Sq.IWycAKsrGsDTH4a_vhfdPNldLrfZQ; _ga_6DGQ7ZZBXE=GS1.1.1712070620.1.1.1712071645.50.0.0; _clsk=ggc52r%7C1712071645763%7C12%7C1%7Cn.clarity.ms%2Fcollect',
+                    'Origin': 'https://minefort.com'
                 }
             })
             .then(response => {
