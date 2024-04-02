@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Minecraft Server</title>
+</head>
+<body>
+    <h1>Start Minecraft Server</h1>
+    <button id="startButton">Start</button>
+
+    <script>
+        // Function to send the HTTPS request when the button is clicked
+        function sendRequest() {
+            // Replace 'YOUR_API_KEY' with your actual API key if required
+            var apiKey = 'YOUR_API_KEY';
+
+            // Replace 'YOUR_SERVER_ID' with the actual server ID
+            var serverId = 'RtntX4XbqF';
+
+            // Construct the URL for the API request
+            var url = 'https://api.minefort.com/v1/server/' + serverId + '/start';
+
+            // Send the HTTPS request
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // If your API requires an API key, include it in the headers like this:
+                    //'Authorization': 'Bearer ' + apiKey
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to start server');
+                }
+                console.log('Server started successfully');
+                // Handle success response here
+            })
+            .catch(error => {
+                console.error('Error starting server:', error);
+                // Handle error here
+            });
+        }
+
+        // Attach click event listener to the button
+        document.getElementById('startButton').addEventListener('click', sendRequest);
+    </script>
+</body>
+</html>
