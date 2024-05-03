@@ -3,104 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pelion Directions</title>
+    <title>Contact Form</title>
+    <link rel="icon" type="image/x-icon" href="goldencube.dev/favicon.png">
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            font-family: 'Roboto Mono', monospace;
+            background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .wrapper {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f0f8ff; /* Lighter shade of blue */
+            min-height: 100vh; /* Set minimum height to fill the viewport */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
         }
 
-        header {
-            background-color: #4682b4; /* Darker shade of blue */
-            color: white;
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
             padding: 20px;
-            text-align: center;
-            animation: slideDown 1s ease-out;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5); /* Add shadow effect */
         }
 
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-            }
-            to {
-                transform: translateY(0);
-            }
+        input[type="text"], input[type="email"], textarea {
+            width: calc(100% - 22px); /* Adjust width for padding */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
         }
 
-        nav {
-            background-color: #4682b4; /* Darker shade of blue */
-            padding: 10px 0;
-            text-align: center;
+        textarea {
+            height: 150px;
         }
 
-        nav a {
-            text-decoration: none;
+        button[type="submit"] {
+            background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
         }
 
-        nav a:hover {
-            background-color: #4169e1; /* Slightly darker shade of blue */
+        button[type="submit"]:hover {
+            background-color: #45a049;
         }
 
-        .content {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .who-we {
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .who-we.show {
-            opacity: 1;
+        #status {
+            margin-top: 15px;
         }
 
         footer {
-            background-color: #4682b4; /* Darker shade of blue */
-            color: white;
+            background-color: #333;
+            color: #fff; /* White text color */
+            padding: 20px 0;
             text-align: center;
-            padding: 10px 0;
-            width: 100%;
+            width: 100%; /* Full width */
         }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        #TopNav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        #TopNav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #TopNav a:hover {
+            background-color: #555;
+        }
+
+        #fileUpload a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #fileUpload a:hover {
+            background-color: #555;
+        }
+
+        /* Popup styles */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+       
+       #infoButton {
+          cursor: pointer;
+     /* This changes the cursor to a hand pointer */
+}
+
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Pelion Directions</h1>
-    </header>
-    <nav>
-        <a href="#who-we">Who are we</a>
-        <a href="/location">Locations</a>
-        <a href="http://www.goldencube.dev">GoldenCube</a>
-    </nav>
-    <div class="content">
-        <section id="who-we">
-            <h2>Who are we</h2>
-            <p>Welcome to Pelion Directions! We are your trusted guide to the beautiful Pelion region in Greece.</p>
-        </section>
-        <section>
-            <h2>Do You Want Your Place To Be On The Site?</h2>
-            <form id="contactForm" action="https://formspree.io/f/xleqbllp" method="POST" onsubmit="return validateForm()">
-                <label>
-                    Your email:
-                    <input type="email" name="email" id="email">
-                </label>
-                <label>
-                    Your message:
-                    <textarea name="message" id="message"></textarea>
-                </label>
-                <button type="submit">Send</button>
-            </form>
-        </section>
+    <div id="TopNav">
+        <a href="https://goldencube.dev">Home</a>
+        <a href="https://goldencube.dev/#"AboutPage>About</a> <!-- Added onclick event -->
+        <a href="/#">Contact</a>
+    </div>
+    <div class="wrapper">
+        <font color="#fff">
+            <h2>Contact Us!</h2>
+            </font>
+        </font>
+        <form id="contactForm" action="https://formspree.io/f/xleqbllp" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+  <label>
+    Your email:
+    <input type="email" name="email">
+  </label>
+  <label>
+    Your file:
+    <input type="text" name="upload">
+  </label>
+  <br>
+  <br>
+  <br>
+  <button type="submit">Send</button>
+</form>
+        <div id="status"></div>
+        <div id="fileUpload">
+            <a href="/fileupload">Switch to File Upload</a>
+        </div>
+        <font color="#fff">
+        <div id="infoButton" onclick="togglePopup()"><h3>info</h3></div> <!-- Info button -->
+        </font>
     </div>
     <footer>
         &copy; GoldenCube 2024 |
@@ -111,5 +187,31 @@
         <a href="mailto:info@goldencube.dev">Email</a>
         <br> Volos, Greece
     </footer>
+
+    <div id="infoPopup" class="popup">
+        <span class="close" onclick="togglePopup()">×</span>
+        <p>This message is going to get sent to: <strong>info@goldencube.dev</strong> and to a semi-private Discord server.</p>
+    </div>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2647736633967701" crossorigin="anonymous"></script>
+
+    <script>
+        function validateForm() {
+            var email = document.getElementById('email').value;
+            var message = document.getElementById('message').value;
+
+            if (email.trim() === '' || message.trim() === '') {
+                alert('Please fill in all fields.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function togglePopup() {
+            var popup = document.getElementById('infoPopup');
+            popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+        }
+    </script>
 </body>
 </html>
