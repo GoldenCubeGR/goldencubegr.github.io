@@ -65,12 +65,15 @@
             background-color: #2980b9;
         }
 
-        .github-btn {
+        .github-btn,
+        .google-btn {
             background-color: #333;
             color: white;
+            margin-top: 10px;
         }
 
-        .github-btn:hover {
+        .github-btn:hover,
+        .google-btn:hover {
             background-color: #222;
         }
     </style>
@@ -93,18 +96,17 @@
 <button class="toggle-btn" id="toggleBtn">Sign Up</button>
 
 <button class="github-btn" id="githubSignInBtn">Sign in with GitHub</button>
+<button class="google-btn" id="googleSignInBtn">Sign in with Google</button>
 
 <!-- Initialize Firebase -->
 <script>
     var firebaseConfig = {
-        apiKey: "AIzaSyAyfvdBX4sF57SGVWzZeBeYeKMxIqrH9SA",
-  	authDomain: "goldencubelogin.firebaseapp.com",
-  	databaseURL: "https://goldencubelogin-default-rtdb.europe-west1.firebasedatabase.app",
-  	projectId: "goldencubelogin",
-  	storageBucket: "goldencubelogin.appspot.com",
-  	messagingSenderId: "715999110250",
-  	appId: "1:715999110250:web:a9400a77b6582e044c1613",
-  	measurementId: "G-XNYXWZKFZ9"
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
@@ -175,6 +177,25 @@
         firebase.auth().signInWithPopup(provider)
             .then(function(result) {
                 // GitHub authentication successful
+                var user = result.user;
+                // Redirect or do something upon successful login
+                window.location.href = "main.html"; // Replace with your desired redirect URL
+            })
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error(errorMessage);
+                // You can display error message to the user here
+            });
+    });
+
+    // Google Sign-in Button
+    document.getElementById('googleSignInBtn').addEventListener('click', function() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider)
+            .then(function(result) {
+                // Google authentication successful
                 var user = result.user;
                 // Redirect or do something upon successful login
                 window.location.href = "main.html"; // Replace with your desired redirect URL
