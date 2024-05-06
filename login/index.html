@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login or Sign Up | goldenCube</title>
+    <link rel="icon" type="image/x-icon" href="goldencube.dev/favicon.ico">
+    <!-- Linking Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+    <!-- Styling -->
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto Mono', monospace;
+            background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="submit"] {
+            margin: 10px;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .toggle-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .github-btn {
+            background-color: #333;
+            color: white;
+        }
+
+        .github-btn:hover {
+            background-color: #222;
+        }
+    </style>
+</head>
+<body>
+<form id="loginForm">
+    <h2>Login to goldenCube</h2>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <input type="submit" value="Login">
+</form>
+
+<form id="signupForm" style="display: none;">
+    <h2>Sign Up</h2>
+    <input type="email" id="signupEmail" placeholder="Email" required><br>
+    <input type="password" id="signupPassword" placeholder="Password" required><br>
+    <input type="submit" value="Sign Up">
+</form>
+
+<button class="toggle-btn" id="toggleBtn">Sign Up</button>
+
+<button class="github-btn" id="githubSignInBtn">Sign in with GitHub</button>
+
+<!-- Initialize Firebase -->
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyAyfvdBX4sF57SGVWzZeBeYeKMxIqrH9SA",
+  	authDomain: "goldencubelogin.firebaseapp.com",
+  	databaseURL: "https://goldencubelogin-default-rtdb.europe-west1.firebasedatabase.app",
+  	projectId: "goldencubelogin",
+  	storageBucket: "goldencubelogin.appspot.com",
+  	messagingSenderId: "715999110250",
+  	appId: "1:715999110250:web:a9400a77b6582e044c1613",
+  	measurementId: "G-XNYXWZKFZ9"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Toggle Button
+    document.getElementById('toggleBtn').addEventListener('click', function() {
+        var loginForm = document.getElementById('loginForm');
+        var signupForm = document.getElementById('signupForm');
+        
+        if (loginForm.style.display === 'none') {
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+            document.getElementById('toggleBtn').innerText = 'Sign Up';
+        } else {
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+            document.getElementById('toggleBtn').innerText = 'Login';
+        }
+    });
+
+    // Login Form
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(function(userCredential) {
+                // Signed in
+                var user = userCredential.user;
+                // Redirect or do something upon successful login
+                window.location.href = "main.html"; // Replace with your desired redirect URL
+            })
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error(errorMessage);
+                // You can display error message to the user here
+            });
+    });
+
+    // Signup Form
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var email = document.getElementById('signupEmail').value;
+        var password = document.getElementById('signupPassword').value;
+
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(function(userCredential) {
+                // Signed up
+                var user = userCredential.user;
+                // Redirect or do something upon successful signup
+                window.location.href = "main.html"; // Replace with your desired redirect URL
+            })
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error(errorMessage);
+                // You can display error message to the user here
+            });
+    });
+
+    // GitHub Sign-in Button
+    document.getElementById('githubSignInBtn').addEventListener('click', function() {
+        var provider = new firebase.auth.GithubAuthProvider();
+        firebase.auth().signInWithPopup(provider)
+            .then(function(result) {
+                // GitHub authentication successful
+                var user = result.user;
+                // Redirect or do something upon successful login
+                window.location.href = "main.html"; // Replace with your desired redirect URL
+            })
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error(errorMessage);
+                // You can display error message to the user here
+            });
+    });
+</script>
+</body>
+</html>
