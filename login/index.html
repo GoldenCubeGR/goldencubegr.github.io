@@ -155,18 +155,13 @@
         var password = document.getElementById('password').value;
 
         firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(function(userCredential) {
-                // Signed in
-                var user = userCredential.user;
-                // Redirect to goldencube.dev upon successful login
-                window.location.href = "https://goldencube.dev";
-            })
-            firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(function(userCredential) {
-                // Signed in
-                var user = userCredential.user;
-                // Redirect to main page with email parameter
-                window.location.href = "https://goldencube.dev/?email=" + email;
+        .then(function(userCredential) {
+             // Signed in
+            var user = userCredential.user;
+            // Set a cookie with the user's email
+            document.cookie = "userEmail=" + email + "; path=/"; // Adjust the path as needed
+            // Redirect to main page
+            window.location.href = "https://goldencube.dev/";
     })
             .catch(function(error) {
                 // Handle Errors here.
