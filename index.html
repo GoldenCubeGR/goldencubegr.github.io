@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>goldenCube</title>
     <link rel="icon" type="image/x-icon" href="goldencube.dev/favicon.ico">
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
+
     <style>
         body {
             margin: 0;
@@ -170,6 +173,17 @@
 </footer>
 
 <script>
+    var firebaseConfig = {
+  apiKey: "AIzaSyAyfvdBX4sF57SGVWzZeBeYeKMxIqrH9SA",
+  authDomain: "goldencubelogin.firebaseapp.com",
+  databaseURL: "https://goldencubelogin-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "goldencubelogin",
+  storageBucket: "goldencubelogin.appspot.com",
+  messagingSenderId: "715999110250",
+  appId: "1:715999110250:web:a9400a77b6582e044c1613",
+  measurementId: "G-XNYXWZKFZ9"
+};
+    firebase.initializeApp(firebaseConfig);
     window.onload = function() {
         var aboutPage = document.getElementById('AboutPage');
         aboutPage.style.display = 'block'; // Show About page by default
@@ -196,8 +210,21 @@
     if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-// Retrieve the user's email from the cookie
-var userEmail = getCookie("userEmail");
+// Retrieve the UID from the cookie
+var storedUID = getCookie("userID");
+
+// Use the retrieved UID to fetch user's email from Firebase Authentication
+firebase.auth().getUser(storedUID)
+    .then(function(userRecord) {
+        // User found, get the email
+        var userEmail = userRecord.email;
+        console.log("User's email:", userEmail);
+        // You can use the email as needed
+    })
+    .catch(function(error) {
+        // Error fetching user
+        console.error("Error fetching user:", error);
+    });
 var loggedInDiv = document.createElement("div");
 loggedInDiv.innerHTML = "You're logged in to goldencube.dev as " + userEmail;
 document.body.appendChild(loggedInDiv);
