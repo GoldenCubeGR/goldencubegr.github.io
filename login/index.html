@@ -1,112 +1,19 @@
+<!-- /login/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | goldenCube</title>
     <link rel="icon" type="image/x-icon" href="goldencube.dev/favicon.ico">
-    <!-- Firebase JavaScript SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-auth.js"></script>
     <!-- Styling -->
     <style>
-        body {
-            margin: 0;
-            font-family: 'Roboto Mono', monospace;
-            background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
-            background-size: cover;
-            background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            position: relative;
-        }
-
-        form {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        input[type="email"],
-        input[type="password"],
-        input[type="submit"] {
-            margin: 10px;
-            padding: 10px;
-            width: calc(100% - 20px);
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        .auth-buttons {
-            margin-top: 20px;
-        }
-
-        .auth-buttons button {
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            margin: 5px;
-            font-size: 16px;
-        }
-
-        .auth-buttons button:hover {
-            background-color: #ddd;
-        }
-
-        .switch-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            background-color: #555;
-            color: white;
-            font-size: 16px;
-        }
-
-        .switch-button:hover {
-            background-color: #333;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff; /* White text color */
-            padding: 20px 0;
-            text-align: center;
-            width: 100%; /* Full width */
-            position: absolute;
-            bottom: 0;
-        }
-
-        footer a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
+        /* Your login page styles here */
+        /* Paste the styles from your login page here */
     </style>
 </head>
 <body>
@@ -116,11 +23,6 @@
     <input type="email" id="email" placeholder="Email" required><br>
     <input type="password" id="password" placeholder="Password" required><br>
     <input type="submit" value="Login">
-
-    <div class="auth-buttons">
-        <button id="googleSignInBtn">Login with Google</button>
-        <button id="githubSignInBtn">Login with GitHub</button>
-    </div>
 </form>
 
 <form id="signupForm" style="display: none;">
@@ -141,21 +43,19 @@
 </footer>
 
 <!-- Initialize Firebase -->
-<script>
-    var firebaseConfig = {
-        apiKey: "AIzaSyAyfvdBX4sF57SGVWzZeBeYeKMxIqrH9SA",
-        authDomain: "goldencubelogin.firebaseapp.com",
-        databaseURL: "https://goldencubelogin-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "goldencubelogin",
-        storageBucket: "goldencubelogin.appspot.com",
-        messagingSenderId: "715999110250",
-        appId: "1:715999110250:web:a9400a77b6582e044c1613",
-        measurementId: "G-XNYXWZKFZ9"
-    };
-    // Initialize Firebase
+var firebaseConfig = {
+  apiKey: "AIzaSyAyfvdBX4sF57SGVWzZeBeYeKMxIqrH9SA",
+  authDomain: "goldencubelogin.firebaseapp.com",
+  databaseURL: "https://goldencubelogin-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "goldencubelogin",
+  storageBucket: "goldencubelogin.appspot.com",
+  messagingSenderId: "715999110250",
+  appId: "1:715999110250:web:a9400a77b6582e044c1613",
+  measurementId: "G-XNYXWZKFZ9"
+};
     firebase.initializeApp(firebaseConfig);
 
-    // Login Form
+    // Login Form submission
     document.getElementById('loginForm').addEventListener('submit', function(event) {
         event.preventDefault();
         var email = document.getElementById('email').value;
@@ -163,21 +63,16 @@
 
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(function(userCredential) {
-                // Signed in
-                var user = userCredential.user;
-                // Redirect to goldencube.dev upon successful login
-                window.location.href = "https://goldencube.dev";
+                // Redirect to the main page after successful login
+                window.location.href = "/";
             })
             .catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.error(errorMessage);
-                // You can display error message to the user here
+                // Handle login errors
+                console.error(error.message);
             });
     });
 
-    // Sign Up Form
+    // Sign Up Form submission
     document.getElementById('signupForm').addEventListener('submit', function(event) {
         event.preventDefault();
         var email = document.getElementById('signupEmail').value;
@@ -185,51 +80,12 @@
 
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(function(userCredential) {
-                // Signed up
-                var user = userCredential.user;
-                // Redirect to goldencube.dev upon successful sign up
-                window.location.href = "https://goldencube.dev";
+                // Redirect to the main page after successful sign up
+                window.location.href = "/";
             })
             .catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.error(errorMessage);
-                // You can display error message to the user here
-            });
-    });
-
-    // Google Sign-In
-    document.getElementById('googleSignInBtn').addEventListener('click', function() {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider)
-            .then(function(result) {
-                // Redirect to goldencube.dev upon successful login
-                window.location.href = "https://goldencube.dev";
-            })
-            .catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.error(errorMessage);
-                // You can display error message to the user here
-            });
-    });
-
-    // GitHub Sign-In
-    document.getElementById('githubSignInBtn').addEventListener('click', function() {
-        var provider = new firebase.auth.GithubAuthProvider();
-        firebase.auth().signInWithPopup(provider)
-            .then(function(result) {
-                // Redirect to goldencube.dev upon successful login
-                window.location.href = "https://goldencube.dev";
-            })
-            .catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.error(errorMessage);
-                // You can display error message to the user here
+                // Handle sign up errors
+                console.error(error.message);
             });
     });
 
