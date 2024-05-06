@@ -17,10 +17,25 @@
             background-image: url(https://golden-cube.w3spaces.com/images/goldencube_bg.jpg);
             background-size: cover;
             background-repeat: no-repeat;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+
+        .wrapper {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            flex-direction: column;
+            min-height: 100vh; /* Set minimum height to fill the viewport */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            animation: slideRight 0.5s ease-in-out; /* Apply slide-in animation */
+        }
+
+        @keyframes slideRight {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(0);
+            }
         }
 
         form {
@@ -52,107 +67,73 @@
         }
 
         .toggle-btn {
-            background-color: #3498db;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            margin-bottom: 10px;
         }
 
         .toggle-btn:hover {
-            background-color: #2980b9;
-        }
-
-        .github-btn{
-            background-color: #333;
-            color: white;
-            margin-top: 10px;
-        }
-
-        .github-btn:hover {
             background-color: #222;
         }
 
-        $white: #fff;
-$google-blue: #4285f4;
-$button-active-blue: #1669F2;
+        .github-btn,
+        .google-btn {
+            background-color: #333;
+            color: white;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-.google-btn {
-  width: 184px;
-  height: 42px;
-  background-color: $google-blue;
-  border-radius: 2px;
-  box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
-  .google-icon-wrapper {
-    position: absolute;
-    margin-top: 1px;
-    margin-left: 1px;
-    width: 40px;
-    height: 40px;
-    border-radius: 2px;
-    background-color: $white;
-  }
-  .google-icon {
-    position: absolute;
-    margin-top: 11px;
-    margin-left: 11px;
-    width: 18px;
-    height: 18px;
-  }
-  .btn-text {
-    float: right;
-    margin: 11px 11px 0 0;
-    color: $white;
-    font-size: 14px;
-    letter-spacing: 0.2px;
-    font-family: "Roboto";
-  }
-  &:hover {
-    box-shadow: 0 0 6px $google-blue;
-  }
-  &:active {
-    background: $button-active-blue;
-  }
-}
-
-@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+        .github-btn:hover,
+        .google-btn:hover {
+            background-color: #222;
+        }
     </style>
 </head>
 <body>
-<form id="loginForm">
-    <h2>Login to goldenCube</h2>
-    <input type="email" id="email" placeholder="Email" required><br>
-    <input type="password" id="password" placeholder="Password" required><br>
-    <input type="submit" value="Login">
-</form>
+<div class="wrapper">
+    <button class="toggle-btn" id="toggleBtn">Sign Up</button>
 
-<form id="signupForm" style="display: none;">
-    <h2>Sign Up</h2>
-    <input type="email" id="signupEmail" placeholder="Email" required><br>
-    <input type="password" id="signupPassword" placeholder="Password" required><br>
-    <input type="submit" value="Sign Up">
-</form>
+    <form id="loginForm">
+        <h2>Login to goldenCube</h2>
+        <input type="email" id="email" placeholder="Email" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+        <input type="submit" value="Login">
+    </form>
 
-<button class="toggle-btn" id="toggleBtn">Sign Up</button>
-<center>
-    <br>
-<button class="github-btn" id="githubSignInBtn">Sign in with GitHub</button>
-<button class="google-btn" id="googleSignInBtn">Sign in with Google</button>
-</center>
+    <form id="signupForm" style="display: none;">
+        <h2>Sign Up</h2>
+        <input type="email" id="signupEmail" placeholder="Email" required><br>
+        <input type="password" id="signupPassword" placeholder="Password" required><br>
+        <input type="submit" value="Sign Up">
+    </form>
+
+    <button class="github-btn" id="githubSignInBtn">Sign in with GitHub</button>
+    <button class="google-btn" id="googleSignInBtn">Sign in with Google</button>
+</div>
+
 <!-- Initialize Firebase -->
 <script>
     var firebaseConfig = {
-        apiKey: "AIzaSyAyfvdBX4sF57SGVWzZeBeYeKMxIqrH9SA",
-        authDomain: "goldencubelogin.firebaseapp.com",
-        databaseURL: "https://goldencubelogin-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "goldencubelogin",
-        storageBucket: "goldencubelogin.appspot.com",
-        messagingSenderId: "715999110250",
-        appId: "1:715999110250:web:a9400a77b6582e044c1613",
-        measurementId: "G-XNYXWZKFZ9"
-    };
+  apiKey: "AIzaSyAyfvdBX4sF57SGVWzZeBeYeKMxIqrH9SA",
+  authDomain: "goldencubelogin.firebaseapp.com",
+  databaseURL: "https://goldencubelogin-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "goldencubelogin",
+  storageBucket: "goldencubelogin.appspot.com",
+  messagingSenderId: "715999110250",
+  appId: "1:715999110250:web:a9400a77b6582e044c1613",
+  measurementId: "G-XNYXWZKFZ9"
+};
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
@@ -160,7 +141,7 @@ $button-active-blue: #1669F2;
     document.getElementById('toggleBtn').addEventListener('click', function() {
         var loginForm = document.getElementById('loginForm');
         var signupForm = document.getElementById('signupForm');
-        
+
         if (loginForm.style.display === 'none') {
             loginForm.style.display = 'block';
             signupForm.style.display = 'none';
@@ -216,12 +197,12 @@ $button-active-blue: #1669F2;
             });
     });
 
-    // GitHub Sign-in Button
+    // GitHub Sign-in
     document.getElementById('githubSignInBtn').addEventListener('click', function() {
         var provider = new firebase.auth.GithubAuthProvider();
         firebase.auth().signInWithPopup(provider)
             .then(function(result) {
-                // GitHub authentication successful
+                // Signed in
                 var user = result.user;
                 // Redirect or do something upon successful login
                 window.location.href = "main.html"; // Replace with your desired redirect URL
@@ -235,12 +216,12 @@ $button-active-blue: #1669F2;
             });
     });
 
-    // Google Sign-in Button
+    // Google Sign-in
     document.getElementById('googleSignInBtn').addEventListener('click', function() {
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider)
             .then(function(result) {
-                // Google authentication successful
+                // Signed in
                 var user = result.user;
                 // Redirect or do something upon successful login
                 window.location.href = "main.html"; // Replace with your desired redirect URL
