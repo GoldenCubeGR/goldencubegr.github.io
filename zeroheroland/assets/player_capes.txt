@@ -1,0 +1,3 @@
+goldenboys2011,https://goldencube.dev/zeroheroland/assets/capes/goldenCape.png,enabled
+Lambrito,https://goldencube.dev/zeroheroland/assets/capes/none.png,disabled
+GeorYT,https://goldencube.dev/zeroheroland/assets/capes/GeorYT.png,enabled
