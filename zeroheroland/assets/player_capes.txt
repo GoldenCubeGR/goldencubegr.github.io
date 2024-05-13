@@ -1,3 +1,4 @@
-goldenboys2011,goldenCape,enabled
-Lambrito,none,disabled
-GeorYT,GeoYT,enabled
+goldenboys2011,goldenCape
+Lambrito,none
+GeorYT,GeoYT
+Player640,GeorYT
