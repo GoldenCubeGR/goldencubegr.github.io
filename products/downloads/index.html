@@ -133,7 +133,13 @@ window.onload = function() {
         var downloadLink = 'https://goldencube.dev/files/TGWUInstaller.exe';
         document.getElementById('downloadLink').setAttribute('href', downloadLink);
         document.getElementById('ConMSG').getElementsByTagName('h2')[0].innerText = 'Download The Game With U';
-    } else {
+    } else if (TGWU) {
+        var downloadLink = 'https://goldencube.dev/files/heic_to_png';
+        document.getElementById('downloadLink').setAttribute('href', downloadLink);
+        document.getElementById('ProductDescription').getElementsByTagName('h1')[0].innerText = 'Heic To Png: An File Transformer';
+        document.getElementById('ProductDescription').getElementsByTagName('h3')[0].innerText = 'An Easy To Use File Transformer For Mac';
+        document.getElementById('ConMSG').getElementsByTagName('h2')[0].innerText = 'Download The Heic To Png Transformer';
+    }else {
         // Handle other cases or errors
         document.getElementById('errorMessage').innerText = 'Invalid download request.';
         document.getElementById('downloadLink').style.display = 'none'; // Hide download link
