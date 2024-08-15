@@ -61,7 +61,13 @@
         // Configuration: Update with your repository details
         const repoOwner = "GoldenCubeGR";
         const repoName = "goldencubegr.github.io";
-        let folderPath = "legend/assets"; // Initial folder path within the repository
+
+        // Dynamically determine the folder path based on the URL
+        const currentUrl = window.location.pathname;
+        const repoIndex = currentUrl.indexOf(repoName);
+        const relativePath = currentUrl.substring(repoIndex + repoName.length + 1); // Adjusted to handle the repository path
+        let folderPath = relativePath ? relativePath : ""; // Start at the root if no path
+
         const historyStack = [];
         let historyIndex = -1;
 
