@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brawl Stars Player Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .profile {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .profile img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .profile h2 {
+            margin: 10px 0;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Brawl Stars Player Profile</h1>
+    <label for="playerTag">Enter Player Tag:</label>
+    <input type="text" id="playerTag" placeholder="#PLAYER_TAG">
+    <button onclick="loadProfile()">Load Profile</button>
+    <div id="profile" class="profile"></div>
+    <div id="error" class="error"></div>
+
+    <script>
+        const API_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjExZjJlNzAxLTQwNmYtNGFiZC1iODMyLTM1Mzk5NTE4YmJjNSIsImlhdCI6MTcyNDQzMTg1OSwic3ViIjoiZGV2ZWxvcGVyLzhiYTRjN2JhLWVlYzQtNDMzOS1iNDNkLTIzOGQwNjFlZjkwOCIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMTg1LjE5OS4xMDguMCIsIjE4NS4xOTkuMTA5LjAiLCIxODUuMTk5LjExMC4wIiwiMTg1LjE5OS4xMTEuMCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.TazoqOemGbVx4KJct-aIxIHII5GK3xf2a2-7z6WhcLvrLoqdkztpLuNqqgIOoRgfml4RzPde4bWoVOeFUysdkQ';
+        const API_BASE_URL = 'https://api.brawlstars.com/v1/players/';
+
+        async function loadProfile() {
+            const playerTag = document.getElementById('playerTag').value.trim();
+            if (!playerTag) {
+                document.getElementById('error').textContent = 'Please enter a player tag.';
+                return;
+            }
+
+            const profileDiv = document.getElementById('profile');
+            profileDiv.innerHTML = '';
+            document.getElementById('error').textContent = '';
+
+            try {
+                const response = await fetch(API_BASE_URL + encodeURIComponent(playerTag), {
+                    headers: {
+                        'Authorization': `Bearer ${API_TOKEN}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'An unknown error occurred');
+                }
+                
+                const data = await response.json();
+                
+                profileDiv.innerHTML = `
+                    <img src="${data.icon.url}" alt="${data.name}">
+                    <h2>${data.name}</h2>
+                    <p>Trophies: ${data.trophies}</p>
+                    <p>Highest Trophies: ${data.highestTrophies}</p>
+                    <p>Solo Victories: ${data.soloVictories}</p>
+                    <p>Duo Victories: ${data.duoVictories}</p>
+                    <p>Power Play Points: ${data.powerPlayPoints}</p>
+                `;
+            } catch (error) {
+                document.getElementById('error').textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
