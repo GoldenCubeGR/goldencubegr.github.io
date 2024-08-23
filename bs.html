@@ -41,6 +41,7 @@
     <script>
         const API_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjExZjJlNzAxLTQwNmYtNGFiZC1iODMyLTM1Mzk5NTE4YmJjNSIsImlhdCI6MTcyNDQzMTg1OSwic3ViIjoiZGV2ZWxvcGVyLzhiYTRjN2JhLWVlYzQtNDMzOS1iNDNkLTIzOGQwNjFlZjkwOCIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMTg1LjE5OS4xMDguMCIsIjE4NS4xOTkuMTA5LjAiLCIxODUuMTk5LjExMC4wIiwiMTg1LjE5OS4xMTEuMCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.TazoqOemGbVx4KJct-aIxIHII5GK3xf2a2-7z6WhcLvrLoqdkztpLuNqqgIOoRgfml4RzPde4bWoVOeFUysdkQ';
         const API_BASE_URL = 'https://api.brawlstars.com/v1/players/';
+        const CORS_PROXY = 'https://corsproxy.io/?';
 
         async function loadProfile() {
             const playerTag = document.getElementById('playerTag').value.trim();
@@ -54,19 +55,20 @@
             document.getElementById('error').textContent = '';
 
             try {
-                const response = await fetch(API_BASE_URL + encodeURIComponent(playerTag), {
+                const url = CORS_PROXY + encodeURIComponent(API_BASE_URL + encodeURIComponent(playerTag));
+                const response = await fetch(url, {
                     headers: {
                         'Authorization': `Bearer ${API_TOKEN}`
                     }
                 });
-                
+
                 if (!response.ok) {
                     const error = await response.json();
                     throw new Error(error.message || 'An unknown error occurred');
                 }
-                
+
                 const data = await response.json();
-                
+
                 profileDiv.innerHTML = `
                     <img src="${data.icon.url}" alt="${data.name}">
                     <h2>${data.name}</h2>
