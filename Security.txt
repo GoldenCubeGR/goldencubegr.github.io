@@ -1,0 +1,6 @@
+Contact: mailto:info@goldencube.dev 
+Contact: mailto:ody.chryssos@gmail.com
+Expires: 2026-01-01T23:20:00Z
+Encryption: htpps://goldencube.dev/encryption.txt
+Canonical: https://goldencube.dev/security.txt
+Preferred-Languages: en
