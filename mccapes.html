@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Race to Fanclub</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏁</text></svg>">
+<style>
+  :root {
+    --bg: #fafafa; --card: #ffffff; --text: #1f2328; --muted: #6b7280; --border: #e5e7eb; --grid: rgba(0,0,0,.08);
+    --red: #F28B82; --green: #81C995; --purple: #B39DDB;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #121316; --card: #1b1d22; --text: #e8eaed; --muted: #9aa0a6; --border: #2c2f36; --grid: rgba(255,255,255,.08); }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.5; }
+  main { max-width: 1000px; margin: 0 auto; padding: 40px 20px 60px; }
+  h1 { font-size: clamp(2rem, 6vw, 3.2rem); margin: 0; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); margin: 6px 0 28px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 22px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; border-top: 5px solid var(--border); }
+  .stat.red { border-top-color: var(--red); } .stat.green { border-top-color: var(--green); } .stat.purple { border-top-color: var(--purple); }
+  .stat .label { color: var(--muted); font-size: .85rem; }
+  .stat .value { font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat .note { color: var(--muted); font-size: .85rem; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 22px; }
+  .card h2 { font-size: 1.1rem; margin: 0 0 12px; }
+  .chart { position: relative; height: 380px; }
+  .verdict { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; margin-bottom: 22px; font-size: 1.05rem; }
+  .growth { text-align: center; color: var(--muted); font-size: .95rem; margin-top: 6px; }
+  .growth b { color: var(--text); }
+  #status { text-align: center; color: var(--muted); padding: 30px 10px; }
+  #status.error { color: #d93025; }
+  footer { color: var(--muted); font-size: .8rem; text-align: center; margin-top: 30px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>The Race to Fanclub 🏁</h1>
+  <p class="sub">Live Discord member counts: Minecraft Capes vs. Fanclub.</p>
+
+  <div id="status">Loading data…</div>
+
+  <div id="content" hidden>
+    <div class="stats">
+      <div class="stat red"><div class="label">Minecraft Capes</div><div class="value" id="n-a">–</div><div class="note" id="g-a"></div></div>
+      <div class="stat green"><div class="label">Fanclub</div><div class="value" id="n-b">–</div><div class="note" id="g-b"></div></div>
+      <div class="stat purple"><div class="label">Difference</div><div class="value" id="n-d">–</div><div class="note" id="d-note"></div></div>
+    </div>
+
+    <div class="verdict" id="verdict"></div>
+
+    <div class="card">
+      <h2>Members per day</h2>
+      <div class="chart"><canvas id="bar"></canvas></div>
+      <div class="growth" id="growth-bar"></div>
+    </div>
+
+    <div class="card">
+      <h2>Members over time</h2>
+      <div class="chart"><canvas id="line"></canvas></div>
+      <div class="growth" id="growth-line"></div>
+    </div>
+  </div>
+
+  <footer>Data from nk.ax/discord-members.json</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  // Data sources, tried in order. If the live URL blocks cross-site requests (CORS),
+  // put a copy of the JSON next to this file as discord-members.json.
+  var SOURCES = ["https://nk.ax/discord-members.json", "discord-members.json"];
+  var A = "minecraftcape", B = "fanclub";
+  var LABELS = { minecraftcape: "Minecraft Capes", fanclub: "Fanclub", difference: "Difference" };
+  var COLOR_VARS = { minecraftcape: "--red", fanclub: "--green", difference: "--purple" };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var charts = [];
+  var series = null;
+
+  function fmt(n) { return Math.round(n).toLocaleString("en-US"); }
+  function signed(n, d) { return (n >= 0 ? "+" : "−") + Math.abs(n).toFixed(d == null ? 2 : d); }
+  function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function dayKey(ms) { var d = new Date(ms); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function dayLabel(key) { var p = key.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString("en-US", { month: "short", day: "numeric" }); }
+
+  async function load() {
+    var lastErr;
+    for (var i = 0; i < SOURCES.length; i++) {
+      try {
+        var res = await fetch(SOURCES[i], { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      } catch (e) { lastErr = e; }
+    }
+    throw lastErr;
+  }
+
+  function groupByServer(data) {
+    var out = {};
+    data.forEach(function (e) {
+      var t = new Date(e.timestamp).getTime();
+      (out[e.invite] = out[e.invite] || []).push({ t: t, v: e.members });
+    });
+    Object.keys(out).forEach(function (k) { out[k].sort(function (a, b) { return a.t - b.t; }); });
+    return out;
+  }
+
+  function interp(points, t) {
+    if (t <= points[0].t) return points[0].v;
+    var last = points[points.length - 1];
+    if (t >= last.t) return last.v;
+    for (var i = 1; i < points.length; i++) {
+      if (t <= points[i].t) {
+        var p = points[i - 1], q = points[i];
+        return p.v + (q.v - p.v) * (t - p.t) / (q.t - p.t || 1);
+      }
+    }
+    return last.v;
+  }
+
+  function differenceSeries(s) {
+    var start = Math.max(s[A][0].t, s[B][0].t);
+    var end = Math.min(s[A][s[A].length - 1].t, s[B][s[B].length - 1].t);
+    var times = {};
+    s[A].concat(s[B]).forEach(function (p) { if (p.t >= start && p.t <= end) times[p.t] = true; });
+    return Object.keys(times).map(Number).sort(function (a, b) { return a - b; }).map(function (t) {
+      return { t: t, v: Math.abs(interp(s[B], t) - interp(s[A], t)) };
+    });
+  }
+
+  function growthPerDay(points) {
+    var a = points[0], b = points[points.length - 1];
+    var days = (b.t - a.t) / 86400000;
+    return days > 0 ? (b.v - a.v) / days : 0;
+  }
+
+  function lastPerDay(points) {
+    var d = {};
+    points.forEach(function (p) { d[dayKey(p.t)] = p.v; });
+    return d;
+  }
+
+  function renderStats() {
+    var la = series[A][series[A].length - 1].v, lb = series[B][series[B].length - 1].v;
+    var ga = growthPerDay(series[A]), gb = growthPerDay(series[B]);
+    $("n-a").textContent = fmt(la);
+    $("n-b").textContent = fmt(lb);
+    $("n-d").textContent = fmt(Math.abs(lb - la));
+    $("g-a").textContent = signed(ga) + " members/day";
+    $("g-b").textContent = signed(gb) + " members/day";
+    $("d-note").textContent = (lb > la ? "Fanclub" : lb < la ? "Minecraft Capes" : "Nobody") + " is ahead";
+
+    // Who is catching up, and when?
+    var v = $("verdict");
+    var gap = Math.abs(lb - la);
+    if (gap === 0) { v.textContent = "🏁 It’s a dead heat right now."; return; }
+    var behindG = lb > la ? ga : gb, aheadG = lb > la ? gb : ga;
+    var behind = lb > la ? "Minecraft Capes" : "Fanclub", ahead = lb > la ? "Fanclub" : "Minecraft Capes";
+    var rel = behindG - aheadG;
+    if (rel > 0) {
+      var days = gap / rel;
+      var when = new Date(Date.now() + days * 86400000).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+      v.innerHTML = "🏃 <b>" + behind + "</b> is closing the gap by " + rel.toFixed(2) + " members/day. At this pace it passes <b>" + ahead + "</b> in about <b>" + Math.ceil(days) + " days</b> (" + when + ").";
+    } else {
+      v.innerHTML = "🏆 <b>" + ahead + "</b> is pulling away. The gap is growing by " + Math.abs(rel).toFixed(2) + " members/day.";
+    }
+  }
+
+  function renderCharts() {
+    charts.forEach(function (c) { c.destroy(); });
+    charts = [];
+
+    var text = cssVar("--text"), muted = cssVar("--muted"), grid = cssVar("--grid");
+    Chart.defaults.color = muted;
+    Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+    var col = function (k) { return cssVar(COLOR_VARS[k]); };
+
+    // ---- bar chart ----
+    var daily = {};
+    daily[A] = lastPerDay(series[A]);
+    daily[B] = lastPerDay(series[B]);
+    daily.difference = {};
+    Object.keys(daily[A]).forEach(function (d) {
+      if (d in daily[B]) daily.difference[d] = Math.abs(daily[B][d] - daily[A][d]);
+    });
+    var days = Object.keys(Object.assign({}, daily[A], daily[B])).sort();
+    var names = [A, B, "difference"];
+
+    charts.push(new Chart($("bar"), {
+      type: "bar",
+      data: {
+        labels: days.map(dayLabel),
+        datasets: names.map(function (n) {
+          return {
+            label: LABELS[n],
+            data: days.map(function (d) { return daily[n][d] == null ? null : daily[n][d]; }),
+            backgroundColor: col(n),
+            borderRadius: 4
+          };
+        })
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: text } },
+          tooltip: { callbacks: { label: function (c) { return c.dataset.label + ": " + fmt(c.parsed.y); } } }
+        },
+        scales: {
+          x: { grid: { display: false } },
+          y: { title: { display: true, text: "Members" }, grid: { color: grid }, ticks: { callback: function (v) { return fmt(v); } } }
+        }
+      }
+    }));
+
+    // ---- line chart ----
+    var lines = {};
+    lines[A] = series[A]; lines[B] = series[B]; lines.difference = differenceSeries(series);
+
+    charts.push(new Chart($("line"), {
+      type: "line",
+      data: {
+        datasets: names.map(function (n) {
+          return {
+            label: LABELS[n],
+            data: lines[n].map(function (p) { return { x: p.t, y: p.v }; }),
+            borderColor: col(n), backgroundColor: col(n),
+            borderWidth: 3, pointRadius: 3, tension: 0.15
+          };
+        })
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: "nearest", intersect: false },
+        plugins: {
+          legend: { labels: { color: text } },
+          tooltip: {
+            callbacks: {
+              title: function (items) { return new Date(items[0].parsed.x).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }); },
+              label: function (c) { return c.dataset.label + ": " + fmt(c.parsed.y); }
+            }
+          }
+        },
+        scales: {
+          x: {
+            type: "linear", grid: { color: grid },
+            ticks: {
+              maxTicksLimit: 8,
+              callback: function (v) { return new Date(v).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }); }
+            }
+          },
+          y: { title: { display: true, text: "Members" }, grid: { color: grid }, ticks: { callback: function (v) { return fmt(v); } } }
+        }
+      }
+    }));
+  }
+
+  function renderGrowth() {
+    var t = "Average growth: <b>Minecraft Capes</b> " + signed(growthPerDay(series[A])) + " members/day &nbsp;•&nbsp; <b>Fanclub</b> " + signed(growthPerDay(series[B])) + " members/day";
+    $("growth-bar").innerHTML = t;
+    $("growth-line").innerHTML = t;
+  }
+
+  async function init() {
+    try {
+      series = groupByServer(await load());
+      if (!series[A] || !series[B] || !series[A].length || !series[B].length) throw new Error("Missing data for one of the servers");
+    } catch (e) {
+      var s = $("status");
+      s.className = "error";
+      s.textContent = "Couldn’t load the member data (" + e.message + "). If the data host blocks cross-site requests, save a copy of the JSON as discord-members.json next to this page.";
+      return;
+    }
+    $("status").hidden = true;
+    $("content").hidden = false;
+    renderStats(); renderGrowth(); renderCharts();
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", renderCharts);
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
